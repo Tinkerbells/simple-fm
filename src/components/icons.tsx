@@ -27,6 +27,9 @@ import {
   type XIcon as LucideIcon,
   HardDrive,
   FolderDown,
+  Folder,
+  ArrowDownCircle,
+  ArrowUpCircle,
 } from "lucide-react"
 
 export type Icon = typeof LucideIcon
@@ -45,6 +48,7 @@ export const Icons = {
       <circle cx="12" cy="12" r="10"></circle>
     </svg>
   ),
+  folder: Folder,
   downloads: FolderDown,
   hardDrive: HardDrive,
   close: X,
@@ -62,6 +66,8 @@ export const Icons = {
   warning: AlertTriangle,
   user: User,
   arrowRight: ArrowRight,
+  arrowDownCircle: ArrowDownCircle,
+  arrowUpCircle: ArrowUpCircle,
   help: HelpCircle,
   pizza: Pizza,
   twitter: Twitter,
