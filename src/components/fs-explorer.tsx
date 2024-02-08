@@ -24,12 +24,13 @@ import { Icons } from "./icons";
 import { cn } from "@/lib/utils";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useScroll } from "@/hooks";
 
 export function FileSystemExplorer() {
   const containerRef = useRef<HTMLDivElement>(null);
   const childRefs = useRef<HTMLButtonElement[]>([]);
   const [isListView, setIsListView] = useState(true)
-  const [isEnd, setIsEnd] = useState(false)
+  const [isAtTop, setIsAtTop] = useState(true)
 
 
   const focusNextItem = () => {
@@ -46,47 +47,35 @@ export function FileSystemExplorer() {
     childRefs.current[previousIndex]?.focus();
   };
 
-  const handleScroll = () => {
-    if (containerRef.current) {
-      if (!isEnd ?? containerRef.current.scrollTop === containerRef.current.scrollHeight - containerRef.current.clientHeight) {
-        containerRef.current.scrollIntoView({ behavior: "instant", block: "end" })
-        setIsEnd(true)
-      }
-      else {
-        containerRef.current.scrollIntoView({ behavior: "instant", block: "start" })
-        setIsEnd(false)
-      }
-    }
-  };
 
   useHotkeys('j', () => focusNextItem())
   useHotkeys('k', () => focusPreviousItem())
-  useHotkeys('shift+g', () => !isEnd && handleScroll())
-  useHotkeys('shift+j', () => isEnd && handleScroll())
+  useHotkeys('shift+g', () => useScroll(containerRef, "end"))
+  useHotkeys('shift+j', () => useScroll(containerRef, "start"))
 
   useEffect(() => {
-    childRefs.current = childRefs.current.slice(0, 22);
+    childRefs.current = childRefs.current.slice(0, 99);
   }, [])
 
   return (
     <div className="p-4 h-full w-full relative">
       <ContextMenu>
         <ContextMenuTrigger className="flex w-full h-full items-center justify-center rounded-md border text-sm" >
-          <ScrollArea className="h-full w-full p-2 overflow-x-hidden">
+          <ScrollArea className="h-full w-full p-2 overflow-x-hidden" >
             <div className={cn("grid gap-2 my-2", !isListView && "grid-cols-5")} ref={containerRef}>
               <DndContext collisionDetection={closestCenter} onDragEnd={(e) => console.log(e, "drag end")}>
-                {Array.from({ length: 20 }, (_, index) => index + 1).map((i) => (
+                {Array.from({ length: 100 }, (_, index) => index + 1).map((i) => (
                   <Folder ref={el => { if (el) childRefs.current[i] = el }} id={i.toString()} isListView={isListView} />
                 ))}
               </DndContext>
             </div>
             <Button
               className="rounded-3xl absolute mt-8 bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-              onClick={handleScroll}
+              onClick={() => useScroll(containerRef, isAtTop ? "end" : "start", () => setIsAtTop(!isAtTop), "smooth")}
               variant={"default"}
               size={"icon"}
             >
-              <Icons.arrowUpCircle className={cn("transition-all", isEnd ? "rotate-0" : "-rotate-180")} />
+              <Icons.arrowUpCircle className={cn("transition-all", isAtTop ? "-rotate-180" : "rotate-0")} />
             </Button>
           </ScrollArea>
         </ContextMenuTrigger>

@@ -4,8 +4,9 @@ import { invoke } from "@tauri-apps/api/tauri"
 import { Menu } from "@/components/menu"
 import { ThemeProvider } from "./components/theme-provider"
 import { cn } from "@/lib/utils"
-import { Sidebar } from "@/components/ui/sidebar"
+import { Sidebar } from "@/components/sidebar"
 import { FileSystemExplorer } from "@/components/fs-explorer"
+import { ScrollArea } from "./components/ui/scroll-area"
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("")

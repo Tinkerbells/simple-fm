@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
-import { Button } from "./button"
-import { Icons } from "../icons"
-import { ModeToggle } from "../theme-toggle"
+import { Icons } from "./icons"
+import { ModeToggle } from "./theme-toggle"
+import { Button } from "./ui/button"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
@@ -46,7 +46,7 @@ export function Sidebar({ className }: SidebarProps) {
         </div>
       </div>
       <div className="py-2 border-t">
-        <div className="px-3 py-2 flex items-center">
+        <div className="px-3 py-2">
           <Button variant="ghost" className="w-full justify-start gap-1">
             <Icons.settings />
             Settings
