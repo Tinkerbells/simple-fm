@@ -21,8 +21,8 @@ export const Folder = forwardRef<HTMLButtonElement, FolderProps>(
       transform: CSS.Transform.toString(transform)
     }
     return (
-      <div ref={setNodeRef}>
-        <Button variant={"outline"} ref={ref} className={cn("gap-1 flex items-end", isListView && "w-full justify-start")} style={style} {...listeners} {...attributes}>
+      <div ref={setNodeRef} className="px-2">
+        <Button variant={"ghost"} ref={ref} className={cn("gap-1 flex items-end focus:bg-accent focus:text-accent-foreground focus-visible:ring-1", isListView && "w-full justify-start")} style={style} {...listeners} {...attributes}>
           <Icons.folder size={30} fill="black" />
           <span className="text-sm">Downloads</span>
         </Button>

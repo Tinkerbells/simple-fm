@@ -31,10 +31,13 @@ export function FileSystemExplorer() {
   const [isListView, setIsListView] = useState(true)
   const [isEnd, setIsEnd] = useState(false)
 
+
   const focusNextItem = () => {
-    const currentIndex = childRefs.current.findIndex(item => document.activeElement === item);
-    const nextIndex = (currentIndex + 1) % childRefs.current.length;
-    childRefs.current[nextIndex]?.focus()
+    if (childRefs.current) {
+      const currentIndex = childRefs.current.findIndex(item => document.activeElement === item);
+      const nextIndex = (currentIndex + 1) % childRefs.current.length;
+      childRefs.current[nextIndex]?.focus()
+    }
   }
 
   const focusPreviousItem = () => {
@@ -58,21 +61,21 @@ export function FileSystemExplorer() {
 
   useHotkeys('j', () => focusNextItem())
   useHotkeys('k', () => focusPreviousItem())
-  useHotkeys('shift+g', () => handleScroll())
-  useHotkeys('shift+j', () => handleScroll())
+  useHotkeys('shift+g', () => !isEnd && handleScroll())
+  useHotkeys('shift+j', () => isEnd && handleScroll())
 
   useEffect(() => {
-    childRefs.current = childRefs.current.slice(0, 99);
+    childRefs.current = childRefs.current.slice(0, 22);
   }, [])
 
   return (
     <div className="p-4 h-full w-full relative">
       <ContextMenu>
         <ContextMenuTrigger className="flex w-full h-full items-center justify-center rounded-md border text-sm" >
-          <ScrollArea className="h-full w-full p-4 overflow-x-hidden">
-            <div className={cn("grid gap-2", !isListView && "grid-cols-5")} ref={containerRef}>
+          <ScrollArea className="h-full w-full p-2 overflow-x-hidden">
+            <div className={cn("grid gap-2 my-2", !isListView && "grid-cols-5")} ref={containerRef}>
               <DndContext collisionDetection={closestCenter} onDragEnd={(e) => console.log(e, "drag end")}>
-                {Array.from({ length: 100 }, (_, index) => index + 1).map((i) => (
+                {Array.from({ length: 20 }, (_, index) => index + 1).map((i) => (
                   <Folder ref={el => { if (el) childRefs.current[i] = el }} id={i.toString()} isListView={isListView} />
                 ))}
               </DndContext>
