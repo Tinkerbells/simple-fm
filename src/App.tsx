@@ -1,37 +1,33 @@
-import { useState } from "react"
-import { invoke } from "@tauri-apps/api/tauri"
+import { useEffect, useState } from "react"
 
 import { Menu } from "@/components/menu"
 import { ThemeProvider } from "./components/theme-provider"
 import { cn } from "@/lib/utils"
 import { Sidebar } from "@/components/sidebar"
 import { FileSystemExplorer } from "@/components/fs-explorer"
-import { ScrollArea } from "./components/ui/scroll-area"
+import { Toaster } from "@/components/ui/toaster"
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("")
-  const [name, setName] = useState("321321k")
+  const [name, setName] = useState("")
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }))
-  }
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <div className="h-screen overflow-clip">
+      <main className="h-screen overflow-clip">
         <Menu />
         <div
           className={cn(
-            "h-screen overflow-auto border-t bg-background pb-8 flex",
-            // "scrollbar-none"
-            "scrollbar scrollbar-track-transparent scrollbar-thumb-accent scrollbar-thumb-rounded-md"
+            "h-screen overflow-hidden border-t bg-background pb-8 flex",
+            "scrollbar-none"
+            // "scrollbar scrollbar-track-transparent scrollbar-thumb-accent scrollbar-thumb-rounded-md"
           )}
         >
           <Sidebar />
           <FileSystemExplorer />
         </div>
-      </div>
+        <Toaster />
+      </main>
     </ThemeProvider>
   )
 }

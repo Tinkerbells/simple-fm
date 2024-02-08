@@ -30,6 +30,10 @@ import {
   Folder,
   ArrowDownCircle,
   ArrowUpCircle,
+  GridIcon,
+  List,
+  FolderDot,
+  Shapes,
 } from "lucide-react"
 
 export type Icon = typeof LucideIcon
@@ -48,7 +52,12 @@ export const Icons = {
       <circle cx="12" cy="12" r="10"></circle>
     </svg>
   ),
+  grid: GridIcon,
+  list: List,
   folder: Folder,
+  folderDot: FolderDot,
+  file: File,
+  shapes: Shapes,
   downloads: FolderDown,
   hardDrive: HardDrive,
   close: X,

@@ -19,7 +19,6 @@ export const useScroll = <T extends HTMLElement>(
       ref.current.scrollIntoView({ behavior: type ?? "instant", block: direction });
       break;
   }
-
   if (callback) {
     callback();
   }

@@ -1,7 +1,6 @@
 "use client"
 
 import { useCallback, } from "react"
-import { Globe, Mic } from "lucide-react"
 import { WindowTitlebar } from "tauri-controls"
 
 import {
@@ -21,9 +20,10 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar"
 
+import logo from "@/assets/logo.png"
+
 import { AboutDialog } from "./about-dialog"
 import { Dialog, DialogTrigger } from "./ui/dialog"
-import { Button } from "./ui/button"
 import { Icons } from "./icons"
 
 export function Menu() {
@@ -38,7 +38,36 @@ export function Menu() {
     // controlsOrder="platform"
     // windowControlsProps={{ platform: "macos", className: "" }}
     >
-      <Menubar className="rounded-none border-b border-none pl-2 lg:pl-3 w-full py-4">
+      <Menubar className="rounded-none border-b border-none pl-2 lg:pl-3 w-full">
+        <MenubarMenu>
+          <MenubarTrigger className="cursor-pointer">
+            {/* <img src={logo} alt="logo" className="w-6 h-6" /> */}
+            <Icons.shapes size={25} />
+          </MenubarTrigger>
+          <Dialog modal={false}>
+            <MenubarContent>
+              <DialogTrigger asChild>
+                <MenubarItem>About App</MenubarItem>
+              </DialogTrigger>
+              <MenubarSeparator />
+              <MenubarItem>
+                Preferences... <MenubarShortcut>⌘,</MenubarShortcut>
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>
+                Hide Music... <MenubarShortcut>⌘H</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>
+                Hide Others... <MenubarShortcut>⇧⌘H</MenubarShortcut>
+              </MenubarItem>
+              <MenubarShortcut />
+              <MenubarItem onClick={closeWindow}>
+                Quit Music <MenubarShortcut>⌘Q</MenubarShortcut>
+              </MenubarItem>
+            </MenubarContent>
+            <AboutDialog />
+          </Dialog>
+        </MenubarMenu>
       </Menubar>
     </WindowTitlebar>
   )
